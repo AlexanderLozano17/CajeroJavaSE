@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import javafx.scene.layout.Background;
@@ -92,6 +93,8 @@ class MarcoCajero extends JFrame {
 	JPanel jpanelRetiro;
 	JPanel jpanelHistorial;
 	
+	int countSaldo = 0;
+	
 	// JButton jpanelMenu
 	JButton btnMenuSaldo;
 	JButton btnMenuDepositar;
@@ -116,6 +119,7 @@ class MarcoCajero extends JFrame {
 	final String CARDJPANELSALDO = "Saldo Cuenta";
 	final String CARDJPANELDEPOSITAR = "Deposito de dinero";
 	final String CARDJPANELRETIRAR = "Retiro de dinero";
+	final String CARDJPANELHISTORIAL = "Historial procesos";
 	
 	NumberFormat formatoImporte = NumberFormat.getNumberInstance();
 
@@ -141,6 +145,7 @@ class MarcoCajero extends JFrame {
         saldoCajero();
         depositarCajero();
         retiroCajero();
+        historialCajero();
         
        
         cardLayout = new JPanel(new CardLayout());   
@@ -149,6 +154,7 @@ class MarcoCajero extends JFrame {
         cardLayout.add(jpanelSaldo, CARDJPANELSALDO);
         cardLayout.add(jpanelDepositar, CARDJPANELDEPOSITAR);
         cardLayout.add(jpanelRetiro, CARDJPANELRETIRAR);
+        cardLayout.add(jpanelHistorial, CARDJPANELHISTORIAL);
         
         jpanelOptionMenu = new JPanel();
         jpanelOptionMenu.setLayout(new CardLayout());        
@@ -188,8 +194,6 @@ class MarcoCajero extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {		
 				obtieneOpcionCardLayout(CARDJPANELSALDO);	
-				
-
 			}
 		});
     	
@@ -213,7 +217,7 @@ class MarcoCajero extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-									
+				obtieneOpcionCardLayout(CARDJPANELHISTORIAL);
 			}
 		});
     	
@@ -315,9 +319,7 @@ class MarcoCajero extends JFrame {
 					
 					JOptionPane.showMessageDialog(null, "El monto a depositar debe se mayor a " + montoMinimoDeposito);
 					txtfMontoRetiro.setText("");
-				}
-				
-				
+				}			
 			}
 		});
     }
@@ -376,8 +378,7 @@ class MarcoCajero extends JFrame {
 					
 					JOptionPane.showMessageDialog(null, "El monto a retirar debe se mayor a " + montoMinimoRetiro);
 					txtfMontoRetiro.setText("");
-				}
-		
+				}		
 			}
 		});
     	
@@ -385,7 +386,13 @@ class MarcoCajero extends JFrame {
     
     public void historialCajero() {
     	
+    	JLabel lbltituloHistorial = new JLabel("Historial de procesos");
+    	JTable jtableHistorial = new JTable();
     	
+    	jpanelHistorial = new JPanel();
+    	jpanelHistorial.setLayout(new GridLayout());
+    	jpanelHistorial.add(lbltituloHistorial, BorderLayout.NORTH);
+    	jpanelHistorial.add(jtableHistorial, BorderLayout.CENTER);
     }
     
     public Map<String, String> adicionaHistorial(Cliente cliente, String clave, String value) {
